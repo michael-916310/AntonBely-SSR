@@ -11,7 +11,7 @@ import { reducer } from './reducer';
 
 function run(store?: Store) {
   hydrate(
-    renderApp(),
+    // renderApp(),
 
     // (
     //   <BrowserRouter>
@@ -19,13 +19,13 @@ function run(store?: Store) {
     //   </BrowserRouter>
     // ),
 
-    // (
-    //   <Provider store={store}>
-    //     <BrowserRouter>
-    //       { renderApp() }
-    //     </BrowserRouter>
-    //   </Provider> 
-    // ),
+    (
+      <Provider store={store}>
+        <BrowserRouter>
+          { renderApp() }
+        </BrowserRouter>
+      </Provider>
+    ),
 
     document.getElementById('root'),
   );

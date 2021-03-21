@@ -9,9 +9,9 @@ import './app.css';
 
 export function renderApp() {
   return (
-    <StaticHelloComponent />
+    // <StaticHelloComponent />
     // <SecondsCounter />
     // <RouterExample />
-    // <RouterWithDataExample />
+    <RouterWithDataExample />
   );
 }

@@ -14,25 +14,28 @@ const app = express();
 
 app.use(express.static('dist'));
 
-// app.get('/api/router-data', async (req, res) => {
-//   try {
-//     console.log('try');
+app.get('/api/router-data', async (req, res) => {
+  try {
+    console.log('try');
 
-//     res.json((await fetchDataByUrl(req.query.url.toString())));
-//   } catch (err) {
-//     res.status(500).json({
-//       message: err.message,
-//       stack: err.stack
-//     });
-//   }
-// });
+    res.json(
+      await fetchDataByUrl(req.query.url.toString())
+    );
+  } catch (err) {
+    res.status(500).json({
+      message: err.message,
+      stack: err.stack
+    });
+  }
+});
 
 app.get('*', async (req, res) => {
   /* Example with Empty content */
   // const content = '';
 
   /* Example with SSR */
-  const content = renderToString(renderApp());
+  //const content='';
+  //const content = renderToString(renderApp());
 
 
   /* Example with Routing */
@@ -46,28 +49,28 @@ app.get('*', async (req, res) => {
 
 
   /* Example with Data */
-  // let context = {};
-  // let data = await fetchDataByUrl(req.url);
+  let context = {};
+  let data = await fetchDataByUrl(req.url);
 
-  // let store = createStore(
-  //   (state) => state,
-  //   data,
-  // );
+  let store = createStore(
+    (state) => state,
+    data,
+  );
 
-  // const content = renderToString(
-  //   <Provider store={store}>
-  //     <StaticRouter location={req.url} context={context}>
-  //       { renderApp() }
-  //     </StaticRouter>
-  //   </Provider>
-  // );
+  const content = renderToString(
+    <Provider store={store}>
+      <StaticRouter location={req.url} context={context}>
+        { renderApp() }
+      </StaticRouter>
+    </Provider>
+  );
 
   res.send(
     renderTemplate({
       cssPath: 'main.css',
       jsPath: 'main.js',
       content,
-      // data: JSON.stringify(data),
+      data: JSON.stringify(data),
     })
   );
 });
